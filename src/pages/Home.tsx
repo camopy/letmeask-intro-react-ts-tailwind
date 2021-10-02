@@ -1,6 +1,8 @@
 
 import { useHistory } from 'react-router';
 
+import { auth, signInWithPopup, GoogleAuthProvider } from '../services/firebase'
+
 import illustrationImg from '../assets/images/illustration.svg'
 import logoImg from '../assets/images/logo.svg'
 import googleIconImg from '../assets/images/google-icon.svg'
@@ -9,8 +11,13 @@ import { Button } from '../components/Button';
 export function Home() {
   const history = useHistory();
 
-  function navigateToNewRoom() {
-    history.push('/rooms/new')
+  function handleCreateRoom() {
+    const provider = new GoogleAuthProvider()
+
+    signInWithPopup(auth, provider).then(result => {
+      console.log(result)
+      history.push('/rooms/new')
+    })
   }
   return (
     <div className="flex items-stretch h-screen">
@@ -24,7 +31,7 @@ export function Home() {
         <div className="flex flex-col items-stretch w-full max-w-xs text-center">
           <img src={logoImg} alt="Letmeask" className="self-center" />
 
-          <button onClick={navigateToNewRoom} className="flex items-center justify-center h-12 gap-2 px-8 py-2 mt-16 mb-6 font-medium text-white bg-red-500 border-0 rounded-lg cursor-pointer hover:transition-opacity hover:opacity-90">
+          <button onClick={handleCreateRoom} className="flex items-center justify-center h-12 gap-2 px-8 py-2 mt-16 mb-6 font-medium text-white bg-red-500 border-0 rounded-lg cursor-pointer hover:transition-opacity hover:opacity-90">
             <img className="mr-2" src={googleIconImg} alt="Logo do Google" />
             Crie sua sala com o Google
           </button>
