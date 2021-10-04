@@ -1,10 +1,32 @@
+import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
 import illustrationImg from "../assets/images/illustration.svg";
 import logoImg from "../assets/images/logo.svg";
 import { Button } from "../components/Button";
+import { useAuth } from "../hooks/useAuth";
+import { db, addDoc, collection } from "../services/firebase";
 
 export function NewRoom() {
+  const { user } = useAuth();
+  const [roomName, setRoomName] = useState("");
+
+  async function handleCreateRoom(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (roomName.trim() === "") {
+      return;
+    }
+
+    const data = {
+      name: roomName,
+      authorId: user?.id,
+    };
+
+    const firebaseRoom = await addDoc(collection(db, "rooms"), data);
+    console.log("firebase room:", firebaseRoom.id);
+  }
+
   return (
     <div className="flex items-stretch h-screen">
       <aside className="flex flex-col justify-center w-2/5 px-32 text-white bg-purple-500">
@@ -23,13 +45,17 @@ export function NewRoom() {
         <div className="flex flex-col items-stretch w-full max-w-xs text-center">
           <img src={logoImg} alt="Letmeask" className="self-center" />
 
+          <h1>{user?.name}</h1>
+          <h1>{user?.id}</h1>
           <h2 className="mt-16 mb-6 text-2xl">Criar uma nova sala</h2>
 
-          <form>
+          <form onSubmit={handleCreateRoom}>
             <input
               className="w-full h-12 px-4 bg-white border border-gray-300 border-solid rounded-lg"
               type="text"
               placeholder="Digite o código da sala"
+              onChange={(event) => setRoomName(event.target.value)}
+              value={roomName}
             />
             <Button type="submit">Criar sala</Button>
           </form>
