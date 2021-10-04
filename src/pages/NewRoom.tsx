@@ -1,5 +1,5 @@
 import { FormEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import illustrationImg from "../assets/images/illustration.svg";
 import logoImg from "../assets/images/logo.svg";
@@ -9,6 +9,7 @@ import { db, addDoc, collection } from "../services/firebase";
 
 export function NewRoom() {
   const { user } = useAuth();
+  const history = useHistory();
   const [roomName, setRoomName] = useState("");
 
   async function handleCreateRoom(event: FormEvent<HTMLFormElement>) {
@@ -24,7 +25,8 @@ export function NewRoom() {
     };
 
     const firebaseRoom = await addDoc(collection(db, "rooms"), data);
-    console.log("firebase room:", firebaseRoom.id);
+
+    history.push(`/rooms/${firebaseRoom.id}`);
   }
 
   return (
@@ -45,8 +47,6 @@ export function NewRoom() {
         <div className="flex flex-col items-stretch w-full max-w-xs text-center">
           <img src={logoImg} alt="Letmeask" className="self-center" />
 
-          <h1>{user?.name}</h1>
-          <h1>{user?.id}</h1>
           <h2 className="mt-16 mb-6 text-2xl">Criar uma nova sala</h2>
 
           <form onSubmit={handleCreateRoom}>
