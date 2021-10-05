@@ -1,11 +1,28 @@
-import { addDoc, collection } from "@firebase/firestore";
-import { FormEvent, useState } from "react";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+} from "@firebase/firestore";
+import { FormEvent, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import logoImg from "../assets/images/logo.svg";
 import { Button } from "../components/Button";
 import { RoomCode } from "../components/RoomCode";
 import { useAuth } from "../hooks/useAuth";
 import { db } from "../services/firebase";
+
+type QuestionType = {
+  id: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
+  content: string;
+  isAnswered: boolean;
+  isHighlighted: boolean;
+};
 
 type RoomParams = {
   id: string;
@@ -15,8 +32,36 @@ export function Room() {
   const { user } = useAuth();
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState("");
+  const [questions, setQuestions] = useState<QuestionType[]>([]);
+  const [title, setTitle] = useState("");
 
   const roomId = params.id;
+
+  useEffect(() => {
+    const roomRef = doc(db, "rooms", roomId);
+    getDoc(roomRef).then((doc) => {
+      if (doc.exists()) {
+        setTitle(doc.data().name);
+      }
+    });
+
+    const questionsRef = collection(db, `rooms/${roomId}/questions`);
+    const unsubscribeQuestions = onSnapshot(questionsRef, (snapshot) => {
+      const questions = Object.entries(snapshot.docs).map(([key, value]) => {
+        const data = value.data();
+        return {
+          id: key,
+          content: data.content,
+          isAnswered: data.isAnswered,
+          isHighlighted: data.isHighlighted,
+          author: data.author,
+        };
+      });
+      setQuestions(questions);
+    });
+
+    return unsubscribeQuestions;
+  }, [roomId]);
 
   async function handleSubmitNewQUestion(event: FormEvent) {
     event.preventDefault();
@@ -57,10 +102,12 @@ export function Room() {
 
       <main className="max-w-4xl mx-auto">
         <div className="flex items-center my-8">
-          <h1 className="text-2xl text-gray-700">Sala</h1>
-          <span className="px-4 py-2 ml-4 text-sm font-medium text-gray-100 bg-pink-400 rounded-full">
-            4 perguntas
-          </span>
+          <h1 className="text-2xl text-gray-700">Sala {title}</h1>
+          {questions.length > 0 && (
+            <span className="px-4 py-2 ml-4 text-sm font-medium text-gray-100 bg-pink-400 rounded-full">
+              {questions.length} perguntas
+            </span>
+          )}
         </div>
 
         <form onSubmit={handleSubmitNewQUestion}>
@@ -97,6 +144,32 @@ export function Room() {
             </Button>
           </div>
         </form>
+
+        {Object.values(questions).map((question) => (
+          <div
+            key={question.id}
+            className={`${
+              question.isHighlighted ? "bg-purple-100" : "bg-white"
+            } border-b border-gray-200 py-4 px-6`}
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center">
+                <img
+                  className="w-8 h-8 rounded-full"
+                  src={question.author.avatar}
+                  alt=""
+                />
+                <span className="ml-2 text-sm font-medium text-gray-600">
+                  {question.author.name}
+                </span>
+              </div>
+              <span className="text-sm font-medium text-gray-600">
+                {question.isAnswered ? "Respondida" : "Pendente"}
+              </span>
+            </div>
+            <p className="mt-2 text-sm text-gray-700">{question.content}</p>
+          </div>
+        ))}
       </main>
     </div>
   );
