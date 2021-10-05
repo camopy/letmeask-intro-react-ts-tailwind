@@ -1,29 +1,13 @@
-import {
-  addDoc,
-  collection,
-  doc,
-  getDoc,
-  onSnapshot,
-} from "@firebase/firestore";
-import { FormEvent, useEffect, useState } from "react";
+import { addDoc, collection } from "@firebase/firestore";
+import { FormEvent, useState } from "react";
 import { useParams } from "react-router";
 import logoImg from "../assets/images/logo.svg";
 import { Button } from "../components/Button";
 import { Question } from "../components/Question";
 import { RoomCode } from "../components/RoomCode";
 import { useAuth } from "../hooks/useAuth";
+import { useRoom } from "../hooks/useRoom";
 import { db } from "../services/firebase";
-
-type QuestionType = {
-  id: string;
-  author: {
-    name: string;
-    avatar: string;
-  };
-  content: string;
-  isAnswered: boolean;
-  isHighlighted: boolean;
-};
 
 type RoomParams = {
   id: string;
@@ -33,36 +17,10 @@ export function Room() {
   const { user } = useAuth();
   const params = useParams<RoomParams>();
   const [newQuestion, setNewQuestion] = useState("");
-  const [questions, setQuestions] = useState<QuestionType[]>([]);
-  const [title, setTitle] = useState("");
 
   const roomId = params.id;
 
-  useEffect(() => {
-    const roomRef = doc(db, "rooms", roomId);
-    getDoc(roomRef).then((doc) => {
-      if (doc.exists()) {
-        setTitle(doc.data().name);
-      }
-    });
-
-    const questionsRef = collection(db, `rooms/${roomId}/questions`);
-    const unsubscribeQuestions = onSnapshot(questionsRef, (snapshot) => {
-      const questions = Object.entries(snapshot.docs).map(([key, value]) => {
-        const data = value.data();
-        return {
-          id: key,
-          content: data.content,
-          isAnswered: data.isAnswered,
-          isHighlighted: data.isHighlighted,
-          author: data.author,
-        };
-      });
-      setQuestions(questions);
-    });
-
-    return unsubscribeQuestions;
-  }, [roomId]);
+  const { questions, title } = useRoom(roomId);
 
   async function handleSubmitNewQUestion(event: FormEvent) {
     event.preventDefault();
