@@ -9,11 +9,13 @@ function App() {
   return (
     <BrowserRouter>
       <AuthContextProvider>
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/rooms/new" component={NewRoom} />
-          <Route path="/rooms/:id" component={Room} />
-        </Switch>
+        <div className="bg-gray-100">
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/rooms/new" component={NewRoom} />
+            <Route path="/rooms/:id" component={Room} />
+          </Switch>
+        </div>
       </AuthContextProvider>
     </BrowserRouter>
   );

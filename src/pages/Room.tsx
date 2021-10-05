@@ -9,6 +9,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { useParams } from "react-router";
 import logoImg from "../assets/images/logo.svg";
 import { Button } from "../components/Button";
+import { Question } from "../components/Question";
 import { RoomCode } from "../components/RoomCode";
 import { useAuth } from "../hooks/useAuth";
 import { db } from "../services/firebase";
@@ -145,31 +146,17 @@ export function Room() {
           </div>
         </form>
 
-        {Object.values(questions).map((question) => (
-          <div
-            key={question.id}
-            className={`${
-              question.isHighlighted ? "bg-purple-100" : "bg-white"
-            } border-b border-gray-200 py-4 px-6`}
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <img
-                  className="w-8 h-8 rounded-full"
-                  src={question.author.avatar}
-                  alt=""
-                />
-                <span className="ml-2 text-sm font-medium text-gray-600">
-                  {question.author.name}
-                </span>
-              </div>
-              <span className="text-sm font-medium text-gray-600">
-                {question.isAnswered ? "Respondida" : "Pendente"}
-              </span>
-            </div>
-            <p className="mt-2 text-sm text-gray-700">{question.content}</p>
-          </div>
-        ))}
+        <div className="mt-8">
+          {questions.map((question) => {
+            return (
+              <Question
+                key={question.id}
+                content={question.content}
+                author={question.author}
+              />
+            );
+          })}
+        </div>
       </main>
     </div>
   );
