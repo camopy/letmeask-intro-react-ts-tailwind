@@ -30,8 +30,8 @@ export function NewRoom() {
   }
 
   return (
-    <div className="flex items-stretch h-screen">
-      <aside className="flex flex-col justify-center w-2/5 px-32 text-white bg-purple-500">
+    <div className="items-stretch h-screen md:flex">
+      <aside className="flex flex-col items-center justify-center px-4 text-white bg-purple-500 md:items-start md:px-32 md:w-2/5">
         <img
           className="max-w-xs"
           src={illustrationImg}
@@ -43,7 +43,7 @@ export function NewRoom() {
         <p>Solve your audience's questions in real-time</p>
       </aside>
 
-      <main className="flex items-center justify-center w-3/5 px-20">
+      <main className="flex items-center justify-center px-4 mt-4 md:mt-0 md:px-20 md:w-3/5">
         <div className="flex flex-col items-stretch w-full max-w-xs text-center">
           <img src={logoImg} alt="Letmeask" className="self-center" />
 

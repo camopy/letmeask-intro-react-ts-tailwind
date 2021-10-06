@@ -10,7 +10,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthContextProvider>
-        <div className="bg-gray-100">
+        <div className="h-screen bg-gray-100">
           <Switch>
             <Route path="/" exact component={Home} />
             <Route path="/rooms/new" component={NewRoom} />

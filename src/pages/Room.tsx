@@ -72,7 +72,7 @@ export function Room() {
   return (
     <div className="h-screen">
       <header className="p-6 border-b">
-        <div className="flex items-center justify-between max-w-6xl mx-auto">
+        <div className="flex flex-col items-center justify-between max-w-6xl gap-2 mx-auto md:flex-row">
           <img className="max-h-11" src={logoImg} alt="Letmeask" />
           <div className="flex gap-2">
             <RoomCode code={roomId} />
@@ -80,7 +80,7 @@ export function Room() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto">
+      <main className="max-w-4xl p-2 mx-auto">
         <div className="flex items-center my-8">
           <h1 className="text-2xl text-gray-700">Room {title}</h1>
           {questions.length > 0 && (
