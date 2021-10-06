@@ -57,7 +57,9 @@ export function NewRoom() {
               onChange={(event) => setRoomName(event.target.value)}
               value={roomName}
             />
-            <Button type="submit">Criar sala</Button>
+            <Button className="w-full mt-4" type="submit">
+              Criar sala
+            </Button>
           </form>
 
           <p className="mt-4 text-sm text-gray-400">
