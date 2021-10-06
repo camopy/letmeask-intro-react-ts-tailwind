@@ -38,34 +38,34 @@ export function NewRoom() {
           alt="Ilustração simbolizando perguntas e respostas"
         />
         <strong className="mt-8 text-4xl leading-10 text-gray-50">
-          Crie salas de Q&amp;A ao-vivo
+          Create live Q&amp;A rooms
         </strong>
-        <p>Tire as dúvidas da sua audiência em tempo-real</p>
+        <p>Solve your audience's questions in real-time</p>
       </aside>
 
       <main className="flex items-center justify-center w-3/5 px-20">
         <div className="flex flex-col items-stretch w-full max-w-xs text-center">
           <img src={logoImg} alt="Letmeask" className="self-center" />
 
-          <h2 className="mt-16 mb-6 text-2xl">Criar uma nova sala</h2>
+          <h2 className="mt-16 mb-6 text-2xl">Create new room</h2>
 
           <form onSubmit={handleCreateRoom}>
             <input
               className="w-full h-12 px-4 bg-white border border-gray-300 border-solid rounded-lg"
               type="text"
-              placeholder="Digite o código da sala"
+              placeholder="Type the room code"
               onChange={(event) => setRoomName(event.target.value)}
               value={roomName}
             />
             <Button className="w-full mt-4" type="submit">
-              Criar sala
+              Create room
             </Button>
           </form>
 
           <p className="mt-4 text-sm text-gray-400">
-            Quer entrar em uma sala existente?{" "}
+            Join an existing room?{" "}
             <Link className="text-pink-300" to="/">
-              clique aqui
+              click here
             </Link>
           </p>
         </div>

@@ -18,7 +18,7 @@ export function RoomCode(props: RoomCodeProps) {
         <img src={copyImg} alt="Copy room code" />
       </div>
       <span className="self-center flex-1 block px-3 py-4 text-sm font-medium w-60">
-        Sala #{props.code}
+        Room #{props.code}
       </span>
     </button>
   );

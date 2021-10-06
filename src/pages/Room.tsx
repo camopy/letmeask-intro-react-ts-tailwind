@@ -82,7 +82,7 @@ export function Room() {
 
       <main className="max-w-4xl mx-auto">
         <div className="flex items-center my-8">
-          <h1 className="text-2xl text-gray-700">Sala {title}</h1>
+          <h1 className="text-2xl text-gray-700">Room {title}</h1>
           {questions.length > 0 && (
             <span className="px-4 py-2 ml-4 text-sm font-medium text-gray-100 bg-pink-400 rounded-full">
               {questions.length} perguntas

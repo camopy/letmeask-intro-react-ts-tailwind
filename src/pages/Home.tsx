@@ -47,9 +47,9 @@ export function Home() {
           alt="Ilustração simbolizando perguntas e respostas"
         />
         <strong className="mt-8 text-4xl leading-10 text-gray-50">
-          Crie salas de Q&amp;A ao-vivo
+          Create live Q&amp;A rooms
         </strong>
-        <p>Tire as dúvidas da sua audiência em tempo-real</p>
+        <p>Solve your audience's questions in real-time</p>
       </aside>
 
       <main className="flex items-center justify-center w-3/5 px-20">
@@ -61,12 +61,12 @@ export function Home() {
             className="flex items-center justify-center h-12 gap-2 px-8 py-2 mt-16 mb-6 font-medium text-white bg-red-500 border-0 rounded-lg cursor-pointer hover:transition-opacity hover:opacity-90"
           >
             <img className="mr-2" src={googleIconImg} alt="Logo do Google" />
-            Crie sua sala com o Google
+            Create room with Google
           </button>
 
           <div className="flex items-center justify-between mb-4 space-x-2">
             <span className="flex-grow border-b-2 border-gray-300"></span>
-            <div>ou entre em uma sala</div>
+            <div>or join a room</div>
             <span className="flex-grow border-b-2 border-gray-300"></span>
           </div>
 
@@ -74,12 +74,12 @@ export function Home() {
             <input
               className="w-full h-12 px-4 bg-white border border-gray-300 border-solid rounded-lg"
               type="text"
-              placeholder="Digite o código da sala"
+              placeholder="Type the room code"
               onChange={(event) => setRoomCode(event.target.value)}
               value={roomCode}
             />
             <Button className="w-full mt-4" type="submit">
-              Entrar na sala
+              Join room
             </Button>
           </form>
         </div>
