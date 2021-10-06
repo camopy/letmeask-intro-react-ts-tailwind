@@ -47,7 +47,7 @@ export function Home() {
     <div className="items-stretch h-screen md:flex">
       <aside className="flex flex-col items-center justify-center px-4 text-white bg-purple-500 md:items-start md:px-32 md:w-2/5">
         <img
-          className="max-w-xs"
+          className="w-2/5 max-w-xs md:w-full"
           src={illustrationImg}
           alt="Ilustração simbolizando perguntas e respostas"
         />
