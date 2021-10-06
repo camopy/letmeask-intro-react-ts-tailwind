@@ -70,7 +70,7 @@ export function Room() {
   }
 
   return (
-    <div>
+    <div className="h-screen">
       <header className="p-6 border-b">
         <div className="flex items-center justify-between max-w-6xl mx-auto">
           <img className="max-h-11" src={logoImg} alt="Letmeask" />
@@ -85,7 +85,7 @@ export function Room() {
           <h1 className="text-2xl text-gray-700">Room {title}</h1>
           {questions.length > 0 && (
             <span className="px-4 py-2 ml-4 text-sm font-medium text-gray-100 bg-pink-400 rounded-full">
-              {questions.length} perguntas
+              {questions.length} Question{questions.length > 1 ? "s" : ""}
             </span>
           )}
         </div>

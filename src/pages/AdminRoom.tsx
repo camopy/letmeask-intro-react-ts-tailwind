@@ -1,5 +1,5 @@
-import { deleteDoc, doc } from "@firebase/firestore";
-import { useParams } from "react-router";
+import { deleteDoc, doc, updateDoc } from "@firebase/firestore";
+import { useHistory, useParams } from "react-router";
 import logoImg from "../assets/images/logo.svg";
 import { Button } from "../components/Button";
 import { Question } from "../components/Question";
@@ -13,6 +13,7 @@ type RoomParams = {
 
 export function AdminRoom() {
   const params = useParams<RoomParams>();
+  const history = useHistory();
 
   const roomId = params.id;
 
@@ -24,14 +25,23 @@ export function AdminRoom() {
     }
   }
 
+  async function handleCloseRoom(roomId: string) {
+    await updateDoc(doc(db, `rooms/${roomId}`), { closedAt: new Date() });
+
+    history.push("");
+  }
+
   return (
-    <div>
+    <div className="h-screen">
       <header className="p-6 border-b">
         <div className="flex items-center justify-between max-w-6xl mx-auto">
           <img className="max-h-11" src={logoImg} alt="Letmeask" />
           <div className="flex gap-2">
             <RoomCode code={roomId} />
-            <Button className="h-10 text-purple-500 bg-white border border-purple-500">
+            <Button
+              onClick={() => handleCloseRoom(roomId)}
+              className="h-10 text-purple-500 bg-white border border-purple-500"
+            >
               Close room
             </Button>
           </div>
@@ -43,7 +53,7 @@ export function AdminRoom() {
           <h1 className="text-2xl text-gray-700">Room {title}</h1>
           {questions.length > 0 && (
             <span className="px-4 py-2 ml-4 text-sm font-medium text-gray-100 bg-pink-400 rounded-full">
-              {questions.length} perguntas
+              {questions.length} Question{questions.length > 1 ? "s" : ""}
             </span>
           )}
         </div>
