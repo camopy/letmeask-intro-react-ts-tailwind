@@ -1,5 +1,5 @@
 <h1 align="center">
-  LetMeAsk
+  <img alt="LetMeAsk" title="Moveit" src="src/assets/images/logo.svg" width="100%" />
 </h1>
 
 <h1 align="center">
@@ -9,18 +9,10 @@
 <br></br>
 
 <p align="center">
-  <a href="#-Getting started">Getting started</a>&nbsp;&nbsp;&nbsp;
+  <a href="#-Getting">Getting started</a>&nbsp;&nbsp;&nbsp;
   <a href="#-Technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-Project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
 </p>
-
-<br>
-
-<h1 align="center">
-  <img alt="LetMeAsk" title="Moveit" src="logo.svg" width="100%" />
-</h1>
-
-
 
 ## 🚀 Getting started
 
